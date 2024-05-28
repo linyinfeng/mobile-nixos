@@ -10,9 +10,18 @@
   };
 
   mobile.boot.stage-1 = {
+    enable = true;
+    kernel.modular = true;
     compression = "xz";
     kernel.package = (pkgs.callPackage ./kernel { });
   };
+  mobile.kernel.structuredConfig = [
+    (helpers: with helpers; {
+      ZSWAP = yes;
+      SERIO = yes;
+      ETHERNET = yes; # qcom rmnet depends on this
+    })
+  ];
 
   hardware.enableRedistributableFirmware = true;
 
@@ -32,7 +41,6 @@
       cp -vf ${pkgs.linux-firmware}/lib/firmware/qcom/{a630_sqe.fw,a630_gmu.bin} $out/lib/firmware/qcom
     '')
   ];
-
 
   mobile.system.type = "android";
   mobile.system.android = {
