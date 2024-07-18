@@ -44,7 +44,7 @@ let
       ${android-flashable-fragment-burnSystem}
     '';
     copyFiles = ''
-      cp -v ${rootfs}/${rootfs.filename} system.img
+      cp -v ${rootfs}${rootfs.location} system.img
     '';
   };
 
@@ -57,7 +57,7 @@ let
     '';
     copyFiles = ''
       cp -v ${android-bootimg} boot.img
-      cp -v ${rootfs}/${rootfs.filename} system.img
+      cp -v ${rootfs}${rootfs.location} system.img
     '';
   };
 in
